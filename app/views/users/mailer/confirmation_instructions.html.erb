@@ -1,0 +1,8 @@
+<p><%= @resource.username %>様</p>
+
+<p>10chへようこそ！</p>
+
+<p>この度はご登録いただきありがとうございます!</p>
+<p>下記のURLにアクセスすると、メールアドレス確認が完了します。</p>
+
+<p><%= link_to 'メールアドレスの確認', confirmation_url(@resource, confirmation_token: @token) %></p>
