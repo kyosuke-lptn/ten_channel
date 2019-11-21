@@ -15,7 +15,7 @@ RSpec.describe "SignInAndOuts", type: :system do
       fill_in 'user_password', with: user.password
       click_button 'ログイン'
       expect(page).not_to have_content 'Eメールまたはパスワードが違います。'
-      expect(current_path).to eq user_path(user)
+      expect(current_path).to eq user_path
     end
   end
 end
