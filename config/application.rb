@@ -29,5 +29,10 @@ module TenChannel
       g.javascripts false
       g.helper false
     end
+
+    # Invalidation field_with_errors
+    config.action_view.field_error_proc = Proc.new do |html_tag, instance|
+      %Q(#{html_tag}).html_safe
+    end
   end
 end

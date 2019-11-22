@@ -8,11 +8,6 @@ RSpec.describe "SignInAndOuts", type: :system do
   it "ユーザー登録" do
     visit new_user_registration_path
     aggregate_failures do
-      expect(page).to have_content 'ログイン'
-
-      click_button 'アカウント登録'
-      expect(page).to have_content 'アカウント登録'
-
       # 入力しなかった場合（登録失敗）
       expect {
         click_button 'アカウント登録'
@@ -40,7 +35,7 @@ RSpec.describe "SignInAndOuts", type: :system do
       expect(current_path).to eq root_path
 
       mail = ActionMailer::Base.deliveries.last
-      URL = extract_confirmation_url(mail)
+      confirmation_url = extract_confirmation_url(mail)
 
       expect(mail.to).to eq ["sample@example.com"]
       expect(mail.subject).to eq "メールアドレス確認メール"
@@ -50,13 +45,54 @@ RSpec.describe "SignInAndOuts", type: :system do
       invalid_URL = "http://localhost:3000/users/confirmation?confirmation_token=aaaaaaaa"
       visit invalid_URL
       expect(page).to have_content "パスワード確認用トークンは不正な値です"
-      expect(page).to have_content "エラーが発生したため ユーザー は保存されませんでした。"
+
+      invalid_URL_2 = "http://localhost:3000/users/confirmation"
+      visit invalid_URL_2
+      expect(page).to have_content "パスワード確認用トークンを入力してください"
 
       # 正しいURLの時
-      visit URL
+      visit confirmation_url
       expect(page).to have_content "アカウントを登録しました。"
-      user = User.find_by(email: 'sample@example.com')
-      expect(current_path).to eq user_path
+      expect(current_path).to eq profiles_path
+    end
+  end
+
+  it "アカウント承認メールを再送する" do
+    visit new_user_registration_path
+    fill_in 'user_name', with: 'sample'
+    fill_in 'user_email', with: 'sample@example.com'
+    fill_in 'user_password', with: 'password'
+    fill_in 'user_password_confirmation', with: 'password'
+    click_button 'アカウント登録'
+
+    visit profiles_path
+    aggregate_failures do
+      expect(page).to have_content 'アカウント登録もしくはログインしてください。'
+      fill_in 'user_email', with: 'sample@example.com'
+      fill_in 'user_password', with: 'password'
+      click_button 'ログイン'
+      expect(page).to have_content 'メールアドレスの本人確認が必要です。'
+      click_link 'アカウント確認のメールを受け取っていませんか？'
+
+      expect(page).to have_content 'アカウント認証メールを再度送信します'
+      expect{
+        fill_in 'user_email', with: 'wrong@mail.com'
+        click_button '送信'
+      }.to change { ActionMailer::Base.deliveries.size }.by(0)
+      expect(page).to have_content 'Eメールは見つかりませんでした。'
+
+      expect {
+        fill_in 'user_email', with: 'sample@example.com'
+        click_button '送信'
+      }.to change { ActionMailer::Base.deliveries.size }.by(1)
+      expect(page).to have_content 'アカウントの有効化について数分以内にメールでご連絡します。'
+
+      mail = ActionMailer::Base.deliveries.last
+      confirmation_url = extract_confirmation_url(mail)
+
+      visit confirmation_url
+      expect(page).to have_content "アカウントを登録しました。"
+      expect(current_path).to eq profiles_path
     end
   end
 

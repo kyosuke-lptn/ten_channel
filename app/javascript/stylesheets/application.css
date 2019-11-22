@@ -1,0 +1,48 @@
+.logo {
+  font-size: pt;
+  font-family: fantasy;
+}
+.title {
+  margin-top: 25px;
+  text-align: center;
+}
+
+/* FLASH MESSAGE */
+.flash-message {
+  font-size: 15pt;
+  text-align: center;
+  margin: 10px;
+}
+.flash-alert {
+  color: red;
+}
+.flash-notice {
+  color: #4FC3F7;
+}
+
+/* FROM */
+.btn.waves-effect.waves-light.waves-input-wrapper:hover {
+  background-color: #4fc3f7;
+}
+input.waves-button-input:hover {
+  color: white;
+}
+.actions {
+  text-align: center;
+}
+#error_explanation {
+  color: red;
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px 0;
+  border: solid 4px;
+  margin-bottom: 20px;
+}
+.user-confirmation {
+  font-size: 14pt;
+}
+
+/* DEVISE LINKS */
+div.devise-links > a {
+  color: #4FC3F7;
+}
