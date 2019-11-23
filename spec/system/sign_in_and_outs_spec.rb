@@ -17,6 +17,36 @@ RSpec.describe "SignInAndOuts", type: :system do
     end
   end
 
+  it "ログインを記憶したケース" do
+    visit new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    check 'ログインを記憶する'
+    click_button 'ログイン'
+    travel 31.minutes
+    visit current_path
+    expect(page).not_to have_content 'セッションがタイムアウトしました。もう一度ログインしてください。'
+  end
+
+  it "タイムアウトになったケース" do
+    visit new_user_session_path
+    login(user.email, user.password)
+
+    travel 31.minutes
+    visit current_path
+    expect(page).to have_content 'セッションがタイムアウトしました。もう一度ログインしてください。'
+  end
+
+  it "trackable機能の確認" do
+    5.times do
+      visit new_user_session_path
+      login(user.email, user.password)
+      sign_out user
+    end
+    user.reload
+    expect(user.sign_in_count).to eq 5
+  end
+
   context 'メール送信する場合' do
     before do
       ActionMailer::Base.deliveries.clear

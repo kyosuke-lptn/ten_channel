@@ -67,15 +67,18 @@ RSpec.configure do |config|
   # devise
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :model
 
   # database_rewinder
   config.before(:suite) do
     DatabaseRewinder.clean_all
   end
-
   config.after(:each) do
     DatabaseRewinder.clean
   end
+
+  # activesupport
+  config.include ActiveSupport::Testing::TimeHelpers
 end
 
 Shoulda::Matchers.configure do |config|
