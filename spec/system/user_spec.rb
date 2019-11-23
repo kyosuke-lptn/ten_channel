@@ -96,6 +96,26 @@ RSpec.describe "SignInAndOuts", type: :system do
     end
   end
 
+  let(:user) { create(:user) }
+
+  it "ユーザー編集と削除" do
+    sign_in user
+    visit edit_user_registration_path
+
+    fill_in 'user_name', with: 'change-name'
+    click_button 'アカウント更新'
+    expect(page).to have_content '現在のパスワードを入力してください'
+
+    fill_in 'user_name', with: 'change-name'
+    fill_in 'user_current_password', with: user.password
+    click_button 'アカウント更新'
+    expect(page).to have_content 'アカウント情報を変更しました。'
+
+    visit edit_user_registration_path
+    click_link 'アカウントを削除する'
+    expect(page).to have_content 'アカウントを削除しました。またのご利用をお待ちしております。'
+  end
+
   def extract_confirmation_url(mail)
     body = mail.body.encoded
     body[/http[^"]+/]

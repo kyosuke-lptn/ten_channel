@@ -67,7 +67,6 @@ RSpec.configure do |config|
   # devise
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Devise::Test::IntegrationHelpers, type: :model
 
   # database_rewinder
   config.before(:suite) do

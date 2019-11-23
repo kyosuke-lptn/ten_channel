@@ -30,6 +30,9 @@
 input.waves-button-input:hover {
   color: white;
 }
+a.waves-input-wrapper.waves-effect.waves-light.btn:hover {
+  color: white;
+}
 .actions {
   text-align: center;
 }

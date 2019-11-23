@@ -14,6 +14,12 @@ RSpec.describe "SignInAndOuts", type: :system do
       login(user.email, user.password)
       expect(page).not_to have_content 'Eメールまたはパスワードが違います。'
       expect(current_path).to eq profiles_path
+
+      click_link "#{user.name}さんのページ"
+      expect(page).to have_content 'ユーザー編集'
+
+      click_link 'ログアウト'
+      expect(page).to have_content 'ログアウトしました。'
     end
   end
 
