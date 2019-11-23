@@ -7,4 +7,5 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to validate_length_of(:name).is_at_most(30) }
   it { is_expected.to validate_length_of(:password).is_at_least(6).is_at_most(128) }
+  it { is_expected.to have_many(:posting_threads) }
 end

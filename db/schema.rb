@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_21_033743) do
+ActiveRecord::Schema.define(version: 2019_11_23_093059) do
+
+  create_table "posting_threads", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "add_index_posting_threads_on_user"
+    t.index ["user_id"], name: "index_posting_threads_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -39,4 +49,5 @@ ActiveRecord::Schema.define(version: 2019_11_21_033743) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "posting_threads", "users"
 end

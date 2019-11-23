@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :posting_threads
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :confirmable, :registerable,
