@@ -11,9 +11,7 @@ RSpec.describe "SignInAndOuts", type: :system do
       click_button 'ログイン'
       expect(page).to have_content 'Eメールまたはパスワードが違います。'
 
-      fill_in 'user_email', with: user.email
-      fill_in 'user_password', with: user.password
-      click_button 'ログイン'
+      login(user.email, user.password)
       expect(page).not_to have_content 'Eメールまたはパスワードが違います。'
       expect(current_path).to eq profiles_path
     end
@@ -64,9 +62,57 @@ RSpec.describe "SignInAndOuts", type: :system do
       end
     end
 
+    it "アカウントがロックされたケース" do
+      visit new_user_unlock_path
+      aggregate_failures do
+        fill_in 'user_email', with: user.email
+        click_button '送信'
+        expect(page).to have_content 'Eメールは凍結されていません。'
+
+        visit new_user_session_path
+        9.times do |index|
+          login(user.email, 'invalidpass')
+        end
+        expect(page).to have_content 'もう一回誤るとアカウントがロックされます。'
+        expect{
+          login(user.email, 'invalidpass')
+        }.to change { ActionMailer::Base.deliveries.size }.by(1)
+        expect(page).to have_content 'アカウントは凍結されています。'
+
+        click_link 'アカウントの凍結解除方法のメールを受け取っていませんか？'
+        expect{
+          fill_in 'user_email', with: user.email
+          click_button '送信'
+        }.to change { ActionMailer::Base.deliveries.size }.by(1)
+        expect(page).to have_content 'アカウントの凍結解除方法を数分以内にメールでご連絡します。'
+
+        invalid_url = 'http://localhost:3000/users/unlock'
+        visit invalid_url
+        expect(page).to have_content 'ロック解除用トークンを入力してください'
+
+        invalid_url_2 = 'http://localhost:3000/users/unlock?unlock_token=aaaaa'
+        visit invalid_url_2
+        expect(page).to have_content 'ロック解除用トークンは不正な値です'
+
+        mail = ActionMailer::Base.deliveries.last
+        confirmation_url = extract_confirmation_url(mail)
+
+        visit confirmation_url
+        expect(page).to have_content 'アカウントを凍結解除しました。'
+        login(user.email, user.password)
+        expect(page).to have_content 'ログインしました。'
+      end
+    end
+
     def extract_confirmation_url(mail)
       body = mail.body.encoded
       body[/http[^"]+/]
     end
+  end
+
+  def login(email, password)
+    fill_in 'user_email', with: email
+    fill_in 'user_password', with: password
+    click_button 'ログイン'
   end
 end
