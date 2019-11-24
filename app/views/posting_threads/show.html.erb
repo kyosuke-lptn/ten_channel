@@ -1,0 +1,26 @@
+<div class="thread-title amber lighten-2">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h3>
+          <%= @posting_thread.title %>
+          <%= link_to edit_posting_thread_path, class: "edit-thred-link" do %>
+            <i class="material-icons">mode_edit</i>
+          <% end if @user %>
+        </h3>
+        <p><%= @posting_thread.description %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="divider"></div>
+  <% 5.times do |index| %>
+    <div class="row">
+      <div class="col s12 section">
+        <%= index %>
+      </div>
+    </div>
+    <div class="divider"></div>
+  <% end %>
+</div>

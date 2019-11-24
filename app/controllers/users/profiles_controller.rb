@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class Users::ProfilesController < ApplicationController
   before_action :authenticate_user!, only: [:show]
 
   def show

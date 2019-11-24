@@ -13,7 +13,7 @@ RSpec.describe "SignInAndOuts", type: :system do
 
       login(user.email, user.password)
       expect(page).not_to have_content 'Eメールまたはパスワードが違います。'
-      expect(current_path).to eq profiles_path
+      expect(current_path).to eq users_profiles_path
 
       click_link "#{user.name}さんのページ"
       expect(page).to have_content 'ユーザー編集'
@@ -94,7 +94,7 @@ RSpec.describe "SignInAndOuts", type: :system do
         fill_in 'user_password_confirmation', with: 'validpass'
         click_button 'パスワードを変更'
         expect(page).to have_content 'パスワードが正しく変更されました。'
-        expect(current_path).to eq profiles_path
+        expect(current_path).to eq users_profiles_path
       end
     end
 

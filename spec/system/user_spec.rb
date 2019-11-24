@@ -53,7 +53,7 @@ RSpec.describe "SignInAndOuts", type: :system do
       # 正しいURLの時
       visit confirmation_url
       expect(page).to have_content "アカウントを登録しました。"
-      expect(current_path).to eq profiles_path
+      expect(current_path).to eq users_profiles_path
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe "SignInAndOuts", type: :system do
     fill_in 'user_password_confirmation', with: 'password'
     click_button 'アカウント登録'
 
-    visit profiles_path
+    visit users_profiles_path
     aggregate_failures do
       expect(page).to have_content 'アカウント登録もしくはログインしてください。'
       fill_in 'user_email', with: 'sample@example.com'
@@ -92,7 +92,7 @@ RSpec.describe "SignInAndOuts", type: :system do
 
       visit confirmation_url
       expect(page).to have_content "アカウントを登録しました。"
-      expect(current_path).to eq profiles_path
+      expect(current_path).to eq users_profiles_path
     end
   end
 

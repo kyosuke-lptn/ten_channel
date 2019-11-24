@@ -1,5 +1,11 @@
 ja:
   activerecord:
+    models:
+      posting_thread: スレッド
+    attributes:
+      posting_thread:
+        title: タイトル
+        description: 詳細
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

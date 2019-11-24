@@ -1,12 +1,46 @@
+a {
+  color: black;
+}
 .logo {
-  font-size: pt;
   font-family: fantasy;
 }
 .title {
   margin-top: 25px;
   text-align: center;
 }
+.thread-home-title {
+  padding: 10px 0;
+}
+.home-image .card-panel.amber.lighten-2 {
+  margin-top: 45px;
+}
+.home-image {
+  width: 100vw;
+  height: 100vh;
+  background: #666 url('../images/thread.jpg') no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  margin-top: 2%;
+}
+.home-image::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  background: inherit;
+  filter: blur(5px);
+  z-index: -1;
+}
 
+.home-panel-thread {
+  color: white;
+  text-align: center;
+  font-size: 60px;
+  text-shadow: 0 0 10px #333;
+}
 /* FLASH MESSAGE */
 .flash-message {
   font-size: 15pt;
@@ -50,5 +84,10 @@ a.waves-input-wrapper.waves-effect.waves-light.btn:hover {
 
 /* DEVISE LINKS */
 div.devise-links > a {
-  color: #4FC3F7;
+  color: #FFC107;
+}
+
+/* thread */
+.thread-title h3 {
+  font-size: xx-large;
 }

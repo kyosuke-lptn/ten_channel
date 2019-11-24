@@ -13,7 +13,7 @@ RSpec.describe "Users::sessions", type: :request do
       it "ユーザー詳細画面にリダイレクトされる" do
         sign_in user
         get new_user_session_path
-        expect(response).to redirect_to profiles_path
+        expect(response).to redirect_to users_profiles_path
       end
     end
   end

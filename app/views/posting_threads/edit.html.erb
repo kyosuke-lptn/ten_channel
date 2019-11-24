@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="title">スレッド編集</h1>
+  <p class="center user-confirmation"></p>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= form_with model: @posting_thread, local: true do |f| %>
+        <%= render "shared/error_messages", resource: f.object %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :title, class: "autocomplete",  data: { length: "100" } %>
+            <%= f.label :title, 'タイトル' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_area :description, class: "materialize-textarea",  data: { length: "500" } %>
+            <%= f.label :description, '詳細' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="actions input-field col s6">
+            <%= f.submit "スレッド更新", class: "btn waves-effect waves-light" %>
+          </div>
+          <div class="actions input-field col s6">
+            <%= link_to "スレッド削除", posting_thread_path(@posting_thread), method: :delete, class: "btn waves-effect waves-light" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

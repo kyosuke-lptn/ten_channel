@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   }
   root 'home#index'
 
-  resource :profiles, only: :show
-
+  resources :posting_threads
+  namespace :users do
+    resource :profiles, only: :show
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
