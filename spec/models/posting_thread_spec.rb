@@ -7,4 +7,5 @@ RSpec.describe PostingThread, type: :model do
   it { is_expected.to validate_length_of(:description).is_at_most(500) }
   it { is_expected.to belong_to :user }
   it { is_expected.to have_many :comments }
+  it { is_expected.to have_many :posting_thread_categorys }
 end

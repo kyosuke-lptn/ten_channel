@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_24_053154) do
+ActiveRecord::Schema.define(version: 2019_11_25_015723) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -33,6 +40,16 @@ ActiveRecord::Schema.define(version: 2019_11_24_053154) do
     t.index ["good_or_bad"], name: "index_likes_on_good_or_bad"
     t.index ["user_id", "comment_id"], name: "index_likes_on_user_id_and_comment_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "posting_thread_categories", force: :cascade do |t|
+    t.integer "posting_thread_id", null: false
+    t.integer "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_posting_thread_categories_on_category_id"
+    t.index ["posting_thread_id", "category_id"], name: "add_index_thread_and_category", unique: true
+    t.index ["posting_thread_id"], name: "index_posting_thread_categories_on_posting_thread_id"
   end
 
   create_table "posting_threads", force: :cascade do |t|
@@ -76,5 +93,7 @@ ActiveRecord::Schema.define(version: 2019_11_24_053154) do
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "comments"
   add_foreign_key "likes", "users"
+  add_foreign_key "posting_thread_categories", "categories"
+  add_foreign_key "posting_thread_categories", "posting_threads"
   add_foreign_key "posting_threads", "users"
 end
