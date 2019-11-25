@@ -18,3 +18,23 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <h2 class="section">人気スレ</h2>
+  <div class="divider"></div>
+  <div class="row section">
+    <div class="col s12">
+      <div class="card-panel amber lighten-2">
+        <div class="row">
+          <% PostingThread.all.each do |thread| %>
+            <div class="col s4">
+              <%= link_to posting_thread_path(thread) do %>
+                <%= tag.h4 thread.title, class: "text-white thread-titletext" %>
+                <div class="divider  light-blue lighten-2"></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

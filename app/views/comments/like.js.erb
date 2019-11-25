@@ -1,0 +1,7 @@
+<% if @like.good_or_bad == "good" %>
+  $(".like-<%= @like.comment.id %>").empty().append("<%= escape_javascript(render('good_like', comment: @like.comment)) %>")
+<% elsif @like.good_or_bad == "bad" %>
+  $(".like-<%= @like.comment.id %>").empty().append("<%= escape_javascript(render('bad_like', comment: @like.comment)) %>")
+<% elsif @like.good_or_bad == "" %>
+  $(".like-<%= @like.comment.id %>").empty().append("<%= escape_javascript(render('both_unlike', comment: @like.comment)) %>")
+<% end %>

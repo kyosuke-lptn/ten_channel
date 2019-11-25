@@ -4,6 +4,11 @@ a {
 .logo {
   font-family: fantasy;
 }
+.row.comment-content {
+  margin-bottom: 0;
+}
+
+/* home page */
 .title {
   margin-top: 25px;
   text-align: center;
@@ -16,7 +21,7 @@ a {
 }
 .home-image {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: #666 url('../images/thread.jpg') no-repeat;
   background-size: cover;
   position: relative;
@@ -41,6 +46,10 @@ a {
   font-size: 60px;
   text-shadow: 0 0 10px #333;
 }
+.thread-titletext {
+  text-shadow: 0 0 20px #333;
+}
+
 /* FLASH MESSAGE */
 .flash-message {
   font-size: 15pt;
@@ -90,4 +99,8 @@ div.devise-links > a {
 /* thread */
 .thread-title h3 {
   font-size: xx-large;
+}
+.not-comment {
+  border: solid 5px red;
+  border-radius: 30px;
 }

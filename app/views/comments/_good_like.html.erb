@@ -1,0 +1,18 @@
+<div class="col s6 center">
+  <%= link_to like_comments_path(
+    like: {
+      good_or_bad: "",
+      comment_id: comment.id,
+    }), remote: true, method: :post do %>
+    <i class="material-icons light-blue-text text-lighten-1">thumb_up</i>
+  <% end %>
+</div>
+<div class="col s6 center">
+  <%= link_to like_comments_path(
+    like: {
+      good_or_bad: "bad",
+      comment_id: comment.id
+    }), remote: true, method: :post do %>
+    <i class="material-icons light-blue-text text-lighten-4">thumb_down</i>
+  <% end %>
+</div>

@@ -1,0 +1,17 @@
+<div class="row comment-content">
+  <div class="col s9">
+    <p><%= comment.poster %></p>
+    <p><strong><%= simple_format(comment.content) %></strong></p>
+  </div>
+  <div class="col s3">
+    <div class="row">
+      <div class="col s12 center">
+        <p><span class="grey-text"><%= comment.updated_at %></span></p>
+      </div>
+      <div class="like-<%= comment.id %>">
+        <%= render('comments/like_form', comment: comment, user: current_user) if current_user %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>

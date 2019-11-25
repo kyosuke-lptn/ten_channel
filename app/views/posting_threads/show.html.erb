@@ -2,25 +2,47 @@
   <div class="container">
     <div class="row">
       <div class="col s12">
-        <h3>
+        <h3 class="center">
           <%= @posting_thread.title %>
           <%= link_to edit_posting_thread_path, class: "edit-thred-link" do %>
             <i class="material-icons">mode_edit</i>
-          <% end if @user %>
+          <% end if @current_user %>
         </h3>
-        <p><%= @posting_thread.description %></p>
+        <p>
+          <%= simple_format(@posting_thread.description) %>
+          <span class="right"><%= @posting_thread.updated_at %></span>
+        </p>
       </div>
     </div>
   </div>
 </div>
 <div class="container">
   <div class="divider"></div>
-  <% 5.times do |index| %>
-    <div class="row">
-      <div class="col s12 section">
-        <%= index %>
+  <% @comments.each do |comment| %>
+    <%= render 'comment', comment: comment, current_user: @current_user %>
+  <% end %>
+  <% if @current_user %>
+    <%= form_with model: Comment.new, id: "comment-form" do |form| %>
+      <%= form.hidden_field :posting_thread_id, value: @posting_thread.id %>
+      <div class="row section">
+        <div class="col s10 input-field">
+          <%= form.text_area :content, class: "materialize-textarea", data: { length: "200" } %>
+          <%= form.label :content, 'コメント' %>
+        </div>
+        <div class="col s2 input-field">
+          <%= form.submit "コメント", class: "btn waves-effect waves-light right" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="row section">
+      <div class="col s12">
+        <%= link_to new_user_session_path do %>
+          <div class="center red-text not-comment">
+            <h5>コメントするためにはユーザーのログインが必要です。</h5>
+          </div>
+        <% end %>
       </div>
     </div>
-    <div class="divider"></div>
   <% end %>
 </div>

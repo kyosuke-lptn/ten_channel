@@ -2,8 +2,9 @@ class PostingThreadsController < ApplicationController
   before_action :authenticate_user!, except: :show
 
   def show
-    @user = current_user
+    @current_user = current_user
     @posting_thread = PostingThread.find params[:id]
+    @comments = @posting_thread.comments.includes(:user)
   end
 
   def new

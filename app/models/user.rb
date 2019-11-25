@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   has_many :posting_threads
+  has_many :comments
+  has_many :likes
+
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :confirmable, :registerable,

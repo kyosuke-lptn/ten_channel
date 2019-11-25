@@ -1,0 +1,7 @@
+<% if comment.good_or_bad?(user) == "" %>
+  <%= render('comments/both_unlike', comment: comment) %>
+<% elsif comment.good_or_bad?(user) == "bad" %>
+  <%= render('comments/bad_like', comment: comment) %>
+<% elsif comment.good_or_bad?(user) == "good" %>
+  <%= render('comments/good_like', comment: comment) %>
+<% end %>

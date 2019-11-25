@@ -6,9 +6,14 @@ Rails.application.routes.draw do
   }
   root 'home#index'
 
-  resources :posting_threads
   namespace :users do
     resource :profiles, only: :show
+  end
+  resources :posting_threads
+  resources :comments, only: [:create, :update, :destroy] do
+    collection do
+      post 'like'
+    end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

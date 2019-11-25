@@ -1,0 +1,2 @@
+$("#comment-form").before("<%= escape_javascript(render('posting_threads/comment', comment: @comment, posting_thread: @posting_thread)) %>");
+ $("#comment_content").val("");
