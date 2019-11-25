@@ -1,6 +1,6 @@
 <div class="container">
   <div class="section">
-    <h3><%= link_to "#{@user.name}さんのページ", edit_user_registration_path %></h3>
+    <h3><%= link_to "#{@user.name}さんのページ", edit_user_registration_path, data: {"turbolinks" => false} %></h3>
   </div>
   <div>
     <div class="divider"></div>

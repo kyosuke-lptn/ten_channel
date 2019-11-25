@@ -4,14 +4,20 @@
       <div class="col s12">
         <h3 class="center">
           <%= @posting_thread.title %>
-          <%= link_to edit_posting_thread_path, class: "edit-thred-link" do %>
+          <%= link_to edit_posting_thread_path, class: "edit-thred-link", data: {"turbolinks" => false} do %>
             <i class="material-icons">mode_edit</i>
           <% end if @current_user %>
         </h3>
-        <p>
-          <%= simple_format(@posting_thread.description) %>
-          <span class="right"><%= @posting_thread.updated_at %></span>
-        </p>
+      </div>
+      <div class="col s9">
+        <p><%= simple_format(@posting_thread.description) %></p>
+      </div>
+      <div class="col s3">
+        <p><strong>カテゴリー</strong></p>
+        <% @posting_thread.categories.each do |category| %>
+          <%= tag.p category.name %>
+        <% end %>
+        <p><%= @posting_thread.updated_at %></p>
       </div>
     </div>
   </div>

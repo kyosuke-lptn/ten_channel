@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  has_many :likes
+  has_many :likes, dependent: :destroy
   belongs_to :user
   belongs_to :posting_thread
 

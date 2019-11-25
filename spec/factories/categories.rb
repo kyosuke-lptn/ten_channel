@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :category do
-    name { "Anime" }
+    name { "アニメ" }
   end
 end

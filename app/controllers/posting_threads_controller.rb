@@ -10,12 +10,14 @@ class PostingThreadsController < ApplicationController
   def new
     @user = current_user
     @posting_thread = PostingThread.new
+    @posting_thread.posting_thread_categories.build
   end
 
   def create
     @user = current_user
-    @posting_thread = @user.posting_threads.build(posting_threads_params)
-    if @posting_thread.save
+    @posting_thread = PostingThread.create(posting_threads_params)
+    if @posting_thread.valid?
+      @posting_thread.posting_thread_categories.create(categories_params)
       redirect_to @posting_thread, notice: "スレッドを立てました。"
     else
       render 'new'
@@ -27,8 +29,17 @@ class PostingThreadsController < ApplicationController
   end
 
   def update
-    @posting_thread = current_user.posting_threads.find params[:id]
+    @posting_thread = PostingThread.find params[:id]
     if @posting_thread.update(posting_threads_params)
+      params_categories_ids = params[:posting_thread_categories][:category_id]
+      params_categories_ids.shift
+      db_categories = @posting_thread.posting_thread_categories
+      db_categories.each do |category|
+        category.destroy unless params_categories_ids.include?(category.id)
+      end
+      params_categories_ids.each do |id|
+        PostingThreadCategory.find_or_create_by(category_id: id, posting_thread_id: @posting_thread.id)
+      end
       redirect_to @posting_thread, notice: "スレッドを更新しました。"
     else
       render 'edit'
@@ -44,6 +55,14 @@ class PostingThreadsController < ApplicationController
   private
 
     def posting_threads_params
-      params.require(:posting_thread).permit(:user_id, :title, :description)
+      params.require(:posting_thread).permit(
+        :user_id,
+        :title,
+        :description,
+      )
+    end
+
+    def categories_params
+      params.require(:posting_thread_categories).permit(:category_id)
     end
 end

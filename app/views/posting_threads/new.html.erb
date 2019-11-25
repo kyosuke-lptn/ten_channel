@@ -19,6 +19,12 @@
           </div>
         </div>
         <div class="row">
+          <div class="input-field col s12">
+            <%= collection_select(:posting_thread_categories, :category_id, Category.all, :id, :name, { multiple: true }) %>
+            <%= label_tag :posting_thread_categories, 'カテゴリー' %>
+          </div>
+        </div>
+        <div class="row">
           <div class="actions input-field col s12">
             <%= f.submit "新しいスレッド作成", class: "btn waves-effect waves-light" %>
           </div>

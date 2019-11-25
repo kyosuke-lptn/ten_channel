@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :posting_threads
-  has_many :comments
-  has_many :likes
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :omniauthable

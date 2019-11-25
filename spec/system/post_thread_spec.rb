@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "PostThread", type: :system do
   let!(:posting_thread) { create(:posting_thread) }
+  let!(:caetgory) { create(:category) }
 
   it "スレッド投稿までの流れ" do
     sign_in posting_thread.user

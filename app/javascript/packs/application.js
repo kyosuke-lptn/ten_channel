@@ -9,6 +9,7 @@ require("@rails/activestorage").start()
 require("channels")
 require("jquery")
 require("stylesheets/application")
+require("js/costom")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -17,11 +18,5 @@ require("stylesheets/application")
 const images = require.context('../images', true)
 const imagePath = (name) => images(name, true)
 
+import "materialize-css/dist/js/materialize";
 import '../src/application.scss'
-import "materialize-css/dist/js/materialize.min.js";
-
-
-// javascript
-$(document).ready(function() {
-  $('input#posting_thread_title, textarea#posting_thread_description, textarea#comment_content').characterCounter();
-});
