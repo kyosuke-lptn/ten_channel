@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-  has_many :posting_thread_categories
+  has_many :posting_thread_categories, inverse_of: :category
   has_many :posting_threads,
             through: 'posting_thread_categories',
             source: 'posting_thread'
