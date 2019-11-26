@@ -11,6 +11,14 @@ class PostingThread < ApplicationRecord
   validates :description, length: { maximum: 500 }
   validates :user_id, presence: true
 
+  scope :filter_by_categories, ->(categories_name) do
+    self.joins(:categories).
+      where("#{Category.table_name}.name IN (?)", categories_name)
+  end
+
+  DISPLAY_AMOUNT = 4
+  scope :recent, ->() { order(:updated_at).limit(DISPLAY_AMOUNT) }
+
   def self.text_match(words)
     return [] if words.blank?
     regexp = "%#{words.strip.gsub(/[ 　\t]+/, "%")}%"
@@ -20,5 +28,25 @@ class PostingThread < ApplicationRecord
       select("#{PostingThread.table_name}.*, count(#{Comment.table_name}.id) as comments_count").
       group(:id).
       order("comments_count desc")
+  end
+
+  def rating
+    self.all_good_count - self.all_bad_count
+  end
+
+  def all_good_count
+    all_count = 0
+    comments.each do |comment|
+      all_count += comment.good_count
+    end
+    all_count
+  end
+
+  def all_bad_count
+    all_count = 0
+    comments.each do |comment|
+      all_count += comment.bad_count
+    end
+    all_count
   end
 end

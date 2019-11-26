@@ -1,7 +1,7 @@
 class Comment < ApplicationRecord
   has_many :likes, dependent: :destroy
   belongs_to :user
-  belongs_to :posting_thread
+  belongs_to :posting_thread, touch: true
 
   validates :content, presence: true, length: { maximum: 200 }
   validates :user_id, presence: true
@@ -14,5 +14,13 @@ class Comment < ApplicationRecord
 
   def poster
     user.name
+  end
+
+  def good_count
+    likes.where(good_or_bad: "good").length
+  end
+
+  def bad_count
+    likes.where(good_or_bad: "bad").length
   end
 end

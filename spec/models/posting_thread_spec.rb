@@ -9,6 +9,24 @@ RSpec.describe PostingThread, type: :model do
   it { is_expected.to have_many :comments }
   it { is_expected.to have_many :posting_thread_categories }
 
+  describe "#filter_by_categories" do
+    let!(:posting_thread) { create(:posting_thread) }
+    let!(:posting_thread_with_category) { create(:posting_thread) }
+    let!(:category) { create(:category, name: "映画") }
+
+    before do
+      PostingThreadCategory.create(
+        posting_thread_id: posting_thread_with_category.id,
+        category_id: category.id
+      )
+    end
+
+    it "カテゴリーが含まれる物のみ出力" do
+      result = PostingThread.filter_by_categories(["映画"])
+      expect(result).to eq [posting_thread_with_category]
+    end
+  end
+
   describe "#categories" do
     let!(:category) { create(:category) }
     let!(:posting_thread) { create(:posting_thread) }
@@ -46,6 +64,4 @@ RSpec.describe PostingThread, type: :model do
       expect(threads).not_to include [no_match_posting_thread]
     end
   end
-
-
 end
