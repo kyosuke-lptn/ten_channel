@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :posting_thread do
-    title { 'sample_title' }
-    description { 'ここに簡単な説明を書きます' }
+    title { Faker::Lorem.sentence(word_count: 1) }
+    description { Faker::Lorem.sentence(word_count: 3) }
     association :user
   end
 end
