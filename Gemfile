@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'devise'
 gem 'devise-i18n'
+gem 'faker'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -40,7 +41,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'pry-byebug'
-  gem 'faker'
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
 end
