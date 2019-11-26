@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def create
-    @categories = Category.where(name: params[:categories])
+    @categories = Category.where(id: params[:categories])
     @search_form = ThreadSearchForm.new(
       word: params[:search_word],
       categories: @categories

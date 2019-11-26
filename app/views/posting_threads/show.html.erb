@@ -13,10 +13,7 @@
         <p><%= simple_format(@posting_thread.description) %></p>
       </div>
       <div class="col s3">
-        <p><strong>カテゴリー</strong></p>
-        <% @posting_thread.categories.each do |category| %>
-          <%= tag.p category.name %>
-        <% end %>
+        <p>カテゴリー　：　<%= @posting_thread.categories.pluck(:name).join(' , ') %></p>
         <p><%= @posting_thread.updated_at %></p>
       </div>
     </div>

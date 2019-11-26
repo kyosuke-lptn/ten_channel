@@ -6,15 +6,15 @@ class ThreadSearchForm
   attribute :categories
 
   def search
-    return [] if word.blank?
-
-    if categories == [""] || categories.blank?
+    if categories == [""] && categories.blank? && word.blank?
+      return []
+    elsif categories == [""] || categories.blank?
       categories_name = Category.pluck(:name)
     else
       categories_name = categories.pluck(:name)
     end
-
-    scope = PostingThread.text_match(word)
-    scope.filter_by_categories(categories_name)
+    scope = PostingThread.filter_by_categories(categories_name)
+    return scope if word.blank?
+    scope.text_match(word)
   end
 end

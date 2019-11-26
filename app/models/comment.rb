@@ -1,7 +1,7 @@
 class Comment < ApplicationRecord
   has_many :likes, dependent: :destroy
   belongs_to :user
-  belongs_to :posting_thread, touch: true
+  belongs_to :posting_thread, touch: true, inverse_of: :comments
 
   validates :content, presence: true, length: { maximum: 200 }
   validates :user_id, presence: true

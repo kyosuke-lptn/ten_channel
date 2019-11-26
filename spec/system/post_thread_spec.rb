@@ -8,7 +8,7 @@ RSpec.describe "PostThread", type: :system do
     sign_in posting_thread.user
     visit root_path
     aggregate_failures do
-      expect(page).to have_content '色んな話題についてみんなで話し合おう！！'
+      expect(page).to have_content '色んな話題についてみんなで語り合おう！！'
 
       click_link 'スレを立てる'
       expect(page).to have_content 'スレを立てよう！！'

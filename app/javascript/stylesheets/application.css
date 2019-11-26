@@ -104,3 +104,8 @@ div.devise-links > a {
   border: solid 5px red;
   border-radius: 30px;
 }
+
+/* MODAL */
+.user-threads {
+  height: 190px;
+}

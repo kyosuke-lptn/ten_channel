@@ -5,15 +5,21 @@
   <div>
     <div class="divider"></div>
     <div class="section">
-      <p>お気に入りカテゴリー</p>
-    </div>
-    <div class="divider"></div>
-    <div class="section">
-      <p>コメント履歴</p>
-    </div>
-    <div class="divider"></div>
-    <div class="section">
-      <p>スレ投稿履歴</p>
+      <h5>スレ投稿履歴</h5>
+      <div class="row">
+        <% @user.posting_threads.each do |thread| %>
+            <%= link_to posting_thread_path(thread.id) do %>
+              <div class="col s3 user-threads">
+                <ul class="collection">
+                  <li class="collection-item amber lighten-2 center"><strong><%= thread.title %></strong></li>
+                  <% thread.comments.limit(3).each do |comment| %>
+                    <li class="collection-item"><%= comment.content %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

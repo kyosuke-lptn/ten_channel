@@ -1,0 +1,27 @@
+<div class="container">
+  <% if @threads.blank? %>
+    <h5 class="section center">「<%= @search_form.word %>」で検索しましたが該当するスレッドが見つかりませんでした。</h5>
+  <% else %>
+    <div class="section">
+      <h5>「<%= @search_form.word %>」の検索結果</h5>
+      <p>カテゴリー　：　<%= @categories.pluck(:name).join(' , ') %></p>
+    </div>
+    <div class="divider"></div>
+    <div class="row section">
+      <div class="col s12">
+        <div class="card-panel amber lighten-2">
+          <div class="row">
+            <% @threads.each do |thread| %>
+              <div class="col s4">
+                <%= link_to posting_thread_path(thread) do %>
+                  <%= tag.h4 thread.title, class: "text-white" %>
+                  <div class="divider  light-blue lighten-2"></div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
