@@ -27,7 +27,10 @@
               <% PostingThread.recent(4).each do |thread| %>
               <div class="col s12">
                 <%= link_to posting_thread_path(thread) do %>
-                <%= tag.h5 thread.title %>
+                <h5>
+                  <%= thread.title %>
+                  <small class="right grey-text"><%= thread.updated_at.strftime("%Y-%m-%d %H:%M") %></small>
+                </h5>
                 <div class="divider"></div>
                 <% end %>
               </div>
@@ -66,13 +69,16 @@
       <h4 class="section center">カテゴリー別</h4>
       <div class="divider"></div>
       <div class="row">
-        <% Category.all.each do |category| %>
+        <% @categories.each do |category| %>
           <div class="col s6">
             <div class="section">
               <ul class="collection with-header card">
                 <li class="collection-item amber lighten-2 center"><strong><%= category.name %></strong></li>
-                <% category.posting_threads.recent(3).each do |thread| %>
-                  <li class="collection-item"><%= link_to thread.title, posting_thread_path(thread.id) %></li>
+                <% category.posting_threads.first(3).each do |thread| %>
+                  <li class="collection-item">
+                    <%= link_to thread.title, posting_thread_path(thread.id) %>
+                    <span class="right grey-text"><%= thread.updated_at.strftime("%Y-%m-%d %H:%M") %></span>
+                  </li>
                 <% end %>
               </ul>
             </div>

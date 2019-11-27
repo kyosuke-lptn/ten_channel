@@ -40,4 +40,13 @@ RSpec.describe PostingThread, type: :model do
       expect(test.posting_thread).to eq category.posting_threads.first
     end
   end
+
+  describe "#user?(current_user)" do
+    subject { posting_thread.user?(current_user) }
+
+    let(:posting_thread) { create(:posting_thread, user_id: current_user.id) }
+    let(:current_user) { create(:user) }
+
+    it { is_expected.to be_truthy }
+  end
 end

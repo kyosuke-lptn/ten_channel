@@ -54,4 +54,8 @@ class PostingThread < ApplicationRecord
     end
     all_count
   end
+
+  def user?(current_user)
+    self.user == current_user
+  end
 end
