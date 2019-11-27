@@ -18,5 +18,5 @@ require("js/costom")
 const images = require.context('../images', true)
 const imagePath = (name) => images(name, true)
 
-import "materialize-css/dist/js/materialize";
-import '../src/application.scss'
+require("materialize-css/dist/js/materialize")
+require('../src/application.scss')
