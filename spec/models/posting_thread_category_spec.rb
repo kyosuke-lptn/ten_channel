@@ -5,7 +5,6 @@ RSpec.describe PostingThreadCategory, type: :model do
   it { is_expected.to validate_presence_of :category_id }
   it { is_expected.to belong_to :posting_thread }
   it { is_expected.to belong_to :category }
-  # it { is_expected.to validate_uniqueness_of(:posting_thread_id).scoped_to(:category_id) }
 
   describe "validate uniqueness" do
     let!(:category) { create(:category) }

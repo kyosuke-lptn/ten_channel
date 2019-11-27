@@ -3,8 +3,12 @@
     <h5 class="section center">「<%= @search_form.word %>」で検索しましたが該当するスレッドが見つかりませんでした。</h5>
   <% else %>
     <div class="section">
-      <h5>「<%= @search_form.word %>」の検索結果</h5>
-      <p>カテゴリー　：　<%= @categories.pluck(:name).join(' , ') %></p>
+      <% if @search_form.word.present? %>
+        <h5>「<%= @search_form.word %>」の検索結果</h5>
+        <p>カテゴリー　：　<%= @categories.pluck(:name).join(' , ') %></p>
+      <% else %>
+        <h5>「<%= @categories.pluck(:name).join(' , ') %>」に含まれるスレッド</h5>
+      <% end %>
     </div>
     <div class="divider"></div>
     <div class="row section">

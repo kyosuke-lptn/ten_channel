@@ -7,12 +7,12 @@
     <div class="section">
       <h5>スレ投稿履歴</h5>
       <div class="row">
-        <% @user.posting_threads.each do |thread| %>
+        <% @posting_thread.each do |thread| %>
             <%= link_to posting_thread_path(thread.id) do %>
               <div class="col s3 user-threads">
                 <ul class="collection">
-                  <li class="collection-item amber lighten-2 center"><strong><%= thread.title %></strong></li>
-                  <% thread.comments.limit(3).each do |comment| %>
+                  <li class="collection-item amber lighten-2"><strong><%= thread.title %></strong><small class="right"><%= thread.created_at.strftime("%m-%d %H:%M") %></small></li>
+                  <% thread.comments.first(3).each do |comment| %>
                     <li class="collection-item"><%= comment.content %></li>
                   <% end %>
                 </ul>

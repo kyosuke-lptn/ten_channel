@@ -43,11 +43,17 @@ RSpec.describe ThreadSearchForm, type: :model do
       end
 
       it "検索に合わなければ空の配列が返る" do
-        result = ThreadSearchForm.new(word: "アニメ", categories: [other_category]).search
-        expect(result).not_to include []
+        result = ThreadSearchForm.new(word: "アニメ", categories: [category]).search
+        expect(result).to eq []
+      end
+
+      it "入力が空であれば空の配列が返る" do
+        result = ThreadSearchForm.new(word: "", categories: []).search
+        expect(result).to eq []
       end
     end
 
+    # 変更する
     context 'スレットにコメントがない場合' do
       it "コメントがないスレッドは検索対象から除外される" do
         result = ThreadSearchForm.new(word: "おはようー！").search

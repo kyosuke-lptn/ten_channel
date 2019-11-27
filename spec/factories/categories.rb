@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :category do
-    name { "アニメ" }
+    name { Faker::Artist.name }
   end
 end

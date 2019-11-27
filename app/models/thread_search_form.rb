@@ -6,7 +6,7 @@ class ThreadSearchForm
   attribute :categories
 
   def search
-    if categories == [""] && categories.blank? && word.blank?
+    if categories.blank? && word.blank?
       return []
     elsif categories == [""] || categories.blank?
       categories_name = Category.pluck(:name)
