@@ -45,15 +45,8 @@ RSpec.describe "PostThread", type: :system do
   end
 
   context 'PostThreadのカテゴリー別と新着ページ'
-  let(:posting_thread_without_category) { create(:posting_thread) }
-  let(:posting_thread_with_category) { create(:posting_thread_with_category) }
-
-  # before do
-  #   PostingThreadCategory.create(
-  #     posting_thread_id: posting_thread.id,
-  #     category_id: category.id
-  #   )
-  # end
+  let!(:posting_thread_without_category) { create(:posting_thread, created_at: Time.current) }
+  let!(:posting_thread_with_category) { create(:posting_thread_with_category, created_at: 2.hours.ago) }
 
   it "ページの確認" do
     visit root_path
@@ -63,7 +56,7 @@ RSpec.describe "PostThread", type: :system do
 
     visit root_path
     click_link posting_thread_with_category.categories[0].name
-    xpect(page).to have_content posting_thread_with_category.title
-    xpect(page).not_to have_content posting_thread_without_category.title
+    expect(page).to have_content posting_thread_with_category.title
+    expect(page).not_to have_content posting_thread_without_category.title
   end
 end

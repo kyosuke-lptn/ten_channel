@@ -1,5 +1,5 @@
 class PostingThreadsController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!, except: [:show, :index]
 
   def index
     @category = Category.find_by id: params[:category]
@@ -22,7 +22,11 @@ class PostingThreadsController < ApplicationController
     @user = current_user
     @posting_thread = PostingThread.create(posting_threads_params)
     if @posting_thread.valid?
-      @posting_thread.posting_thread_categories.create(categories_params)
+      params_categories_ids = categories_params[:category_id]
+      params_categories_ids.shift
+      params_categories_ids.each do |id|
+        PostingThreadCategory.find_or_create_by(category_id: id, posting_thread_id: @posting_thread.id)
+      end
       redirect_to @posting_thread, notice: "スレッドを立てました。"
     else
       render 'new'
@@ -36,7 +40,7 @@ class PostingThreadsController < ApplicationController
   def update
     @posting_thread = PostingThread.find params[:id]
     if @posting_thread.update(posting_threads_params)
-      params_categories_ids = params[:posting_thread_categories][:category_id]
+      params_categories_ids = categories_params[:category_id]
       params_categories_ids.shift
       db_categories = @posting_thread.posting_thread_categories
       db_categories.each do |category|
@@ -68,6 +72,6 @@ class PostingThreadsController < ApplicationController
     end
 
     def categories_params
-      params.require(:posting_thread_categories).permit(:category_id)
+      params.require(:posting_thread_categories).permit(category_id: [])
     end
 end

@@ -28,6 +28,8 @@ RSpec.describe "PostingThreads", type: :request do
     end
 
     context "ログインしている場合" do
+      let!(:category2) { create(:category) }
+
       it "カテゴリーが追加されている" do
         sign_in posting_thread.user
         post posting_threads_path, params: {
@@ -37,7 +39,7 @@ RSpec.describe "PostingThreads", type: :request do
             description: "変更されたdescription",
           },
           posting_thread_categories: {
-            category_id: category.id
+            category_id: ["", category.id]
           }
         }
         saved_thread = PostingThread.find_by(
@@ -46,6 +48,26 @@ RSpec.describe "PostingThreads", type: :request do
           description: "変更されたdescription",
         )
         expect(saved_thread.categories).to include category
+      end
+
+      it "複数のカテゴリーが追加されている" do
+        sign_in posting_thread.user
+        post posting_threads_path, params: {
+          posting_thread: {
+            user_id: posting_thread.user_id,
+            title: "変更されたtitle",
+            description: "変更されたdescription",
+          },
+          posting_thread_categories: {
+            category_id: ["", category.id, category2.id]
+          }
+        }
+        saved_thread = PostingThread.find_by(
+          user_id: posting_thread.user_id,
+          title: "変更されたtitle",
+          description: "変更されたdescription",
+        )
+        expect(saved_thread.categories).to eq [category, category2]
       end
     end
   end
