@@ -49,4 +49,17 @@ RSpec.describe PostingThread, type: :model do
 
     it { is_expected.to be_truthy }
   end
+
+  describe "#recent" do
+    subject { PostingThread.recent(2) }
+
+    let!(:posting_thread) { create(:posting_thread, created_at: Time.current) }
+    let!(:old_posting_thread) { create(:posting_thread, created_at: 2.hours.ago) }
+
+    it "新しい順に投稿が出てくる" do
+      posting_threads = PostingThread.recent(2)
+      expect(posting_threads[0]).to eq posting_thread
+      expect(posting_threads[1]).to eq old_posting_thread
+    end
+  end
 end

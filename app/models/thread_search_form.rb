@@ -17,4 +17,19 @@ class ThreadSearchForm
     return scope if word.blank?
     scope.text_match(word)
   end
+
+  def self.filter_by_category_or_new_arrival(category, page)
+    if category
+      PostingThread.
+        eager_load(:comments).
+        filter_by_categories(category.name).
+        paginate(page: page, per_page: 24).
+        order(created_at: :desc)
+    else
+      PostingThread.
+        eager_load(:comments).
+        paginate(page: page, per_page: 24).
+        order(created_at: :desc)
+    end
+  end
 end

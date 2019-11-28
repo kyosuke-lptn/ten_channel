@@ -1,11 +1,10 @@
 <div class="container">
   <div class="section">
-    <h3><%= link_to "#{@user.name}さんのページ", edit_user_registration_path, data: {"turbolinks" => false} %></h3>
+    <h3 class="center"><%= @category ? @category.name : '新着スレッド' %></h3>
   </div>
   <div>
     <div class="divider"></div>
     <div class="section">
-      <h5>スレ投稿履歴</h5>
       <%= render 'shared/posting_threads', posting_threads: @posting_threads, display_amount: 3 %>
     </div>
   </div>

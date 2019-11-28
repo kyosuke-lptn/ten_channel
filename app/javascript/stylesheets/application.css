@@ -109,3 +109,8 @@ div.devise-links > a {
 .user-threads {
   height: 190px;
 }
+
+/* paginate */
+.pagination li.active a {
+  color: #fff;
+}

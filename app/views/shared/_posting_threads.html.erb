@@ -1,0 +1,19 @@
+<div class="row">
+  <% posting_threads.each do |thread| %>
+      <%= link_to posting_thread_path(thread.id) do %>
+        <div class="col s3 user-threads">
+          <ul class="collection">
+            <li class="collection-item amber lighten-2"><strong><%= thread.title %></strong><small class="right"><%= thread.created_at.strftime("%m-%d %H:%M") %></small></li>
+            <% thread.comments.first(display_amount).each do |comment| %>
+              <li class="collection-item"><%= comment.content %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+  <% end %>
+</div>
+<div class="browsers">
+  <div class="col 12 center">
+    <%= will_paginate posting_threads %>
+  </div>
+</div>

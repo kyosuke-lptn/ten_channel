@@ -15,7 +15,7 @@ class PostingThread < ApplicationRecord
       where("#{Category.table_name}.name IN (?)", categories_name)
   end
 
-  scope :recent, ->(display_amount) { order(:updated_at).limit(display_amount) }
+  scope :recent, ->(display_amount) { order(created_at: 'desc').limit(display_amount) }
   scope :filter_by_words_with_exclusion, ->(regexp_word, exclusion_ids) do
     joins(:comments, :categories).
       where("#{PostingThread.table_name}.title Like :this OR #{PostingThread.table_name}.description Like :this OR #{Comment.table_name}.content Like :this OR #{Category.table_name}.name Like :this", this: regexp_word).

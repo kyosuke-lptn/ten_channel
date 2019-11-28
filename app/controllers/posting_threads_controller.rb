@@ -1,6 +1,11 @@
 class PostingThreadsController < ApplicationController
   before_action :authenticate_user!, except: :show
 
+  def index
+    @category = Category.find_by id: params[:category]
+    @posting_threads = ThreadSearchForm.filter_by_category_or_new_arrival(@category, params[:page])
+  end
+
   def show
     @current_user = current_user
     @posting_thread = PostingThread.find params[:id]

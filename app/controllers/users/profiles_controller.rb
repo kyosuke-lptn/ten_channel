@@ -3,6 +3,10 @@ class Users::ProfilesController < ApplicationController
 
   def show
     @user = current_user
-    @posting_thread = @user.posting_threads.eager_load(:comments).order('posting_threads.created_at').order('comments.updated_at desc')
+    @posting_threads = @user.
+      posting_threads.eager_load(:comments).
+      paginate(page: params[:page], per_page: 12).
+      order('posting_threads.created_at').
+      order('comments.updated_at desc')
   end
 end

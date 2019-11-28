@@ -43,4 +43,27 @@ RSpec.describe "PostThread", type: :system do
     visit posting_thread_path(posting_thread)
     expect(page).not_to have_css '.edit-thred-link'
   end
+
+  context 'PostThreadのカテゴリー別と新着ページ'
+  let(:posting_thread_without_category) { create(:posting_thread) }
+  let(:posting_thread_with_category) { create(:posting_thread_with_category) }
+
+  # before do
+  #   PostingThreadCategory.create(
+  #     posting_thread_id: posting_thread.id,
+  #     category_id: category.id
+  #   )
+  # end
+
+  it "ページの確認" do
+    visit root_path
+    click_link '新着スレ'
+    expect(page).to have_content posting_thread_without_category.title
+    expect(page).to have_content posting_thread_with_category.title
+
+    visit root_path
+    click_link posting_thread_with_category.categories[0].name
+    xpect(page).to have_content posting_thread_with_category.title
+    xpect(page).not_to have_content posting_thread_without_category.title
+  end
 end
